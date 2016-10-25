@@ -95,6 +95,9 @@ public class MainActivity extends Activity {
             case R.id.opcAcercaDe:
                 startActivity(new Intent(this, AcercaDe.class));
                 return true;
+            case R.id.opcReiniciarPartida:
+                new ResetDialogFragment().show(getFragmentManager(), "RESET GAME DIALOG");
+                return true;
 
             // TODO!!! resto opciones
 
