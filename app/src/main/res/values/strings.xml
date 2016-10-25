@@ -28,7 +28,7 @@
     <string name="preferencesText">Ajustes</string>
 
     <!-- Restart Game Dialog -->
-    <string name="dialogTite">Reiniciar partida</string>
+    <string name="dialogTitle">Reiniciar partida</string>
     <string name="dialogMessage">¿Desea reiniciar la partida?</string>
     <string name="YesDialogOption">Sí</string>
     <string name="NoDialogOption">No</string>
