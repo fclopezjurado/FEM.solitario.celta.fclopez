@@ -1,6 +1,7 @@
 package es.upm.miw.SolitarioCelta;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -97,6 +98,12 @@ public class MainActivity extends Activity {
                 return true;
             case R.id.opcReiniciarPartida:
                 new ResetDialogFragment().show(getFragmentManager(), "RESET GAME DIALOG");
+                return true;
+            case R.id.opcGuardarPartida:
+                FileHandler fileHandler = new FileHandler(FileHandler.GAME);
+                fileHandler.writeFile(this, this.juego.serializaTablero(), Context.MODE_PRIVATE);
+                Toast.makeText(this, getString(R.string.stringToUseInToastForSaveGame),
+                        Toast.LENGTH_SHORT).show();
                 return true;
 
             // TODO!!! resto opciones
