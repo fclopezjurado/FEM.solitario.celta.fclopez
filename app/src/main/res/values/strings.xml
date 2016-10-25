@@ -33,4 +33,7 @@
     <string name="YesDialogOption">Sí</string>
     <string name="NoDialogOption">No</string>
 
+    <!-- String for Toast shown when an user saves the game -->
+    <string name="stringToUseInToastForSaveGame">Partida guardada</string>
+
 </resources>
