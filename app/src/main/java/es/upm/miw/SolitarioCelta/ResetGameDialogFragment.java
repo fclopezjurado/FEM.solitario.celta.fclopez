@@ -10,7 +10,7 @@ import android.os.Bundle;
  * Created by franlopez on 25/10/2016.
  */
 
-public class ResetDialogFragment extends DialogFragment {
+public class ResetGameDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {

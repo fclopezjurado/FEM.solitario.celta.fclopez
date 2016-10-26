@@ -1,7 +1,6 @@
 package es.upm.miw.SolitarioCelta;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,8 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
-
-import java.io.IOException;
 
 public class MainActivity extends Activity {
 
@@ -102,7 +99,7 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(this, AcercaDe.class));
                 return true;
             case R.id.opcReiniciarPartida:
-                new ResetDialogFragment().show(getFragmentManager(), "RESET GAME DIALOG");
+                new ResetGameDialogFragment().show(getFragmentManager(), "RESET GAME DIALOG");
                 return true;
             case R.id.opcGuardarPartida:
                 this.juego.saveGame(this);
