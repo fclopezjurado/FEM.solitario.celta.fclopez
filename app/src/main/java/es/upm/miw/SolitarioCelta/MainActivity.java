@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
                 return true;
             case R.id.opcRecuperarPartida:
                 this.juego.loadGame(this);
-                break;
+                return true;
 
             // TODO!!! resto opciones
 
