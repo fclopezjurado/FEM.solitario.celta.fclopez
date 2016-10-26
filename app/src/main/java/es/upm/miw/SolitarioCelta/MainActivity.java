@@ -10,9 +10,11 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 public class MainActivity extends Activity {
 
-	JuegoCelta juego;
+    JuegoCelta juego;
     private final String GRID_KEY = "GRID_KEY";
 
     public void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class MainActivity extends Activity {
      * Se ejecuta al pulsar una ficha
      * Las coordenadas (i, j) se obtienen a partir del nombre, ya que el botón
      * tiene un identificador en formato pXY, donde X es la fila e Y la columna
+     *
      * @param v Vista de la ficha pulsada
      */
     public void fichaPulsada(View v) {
@@ -64,6 +67,7 @@ public class MainActivity extends Activity {
 
     /**
      * Guarda el estado del tablero (serializado)
+     *
      * @param outState Bundle para almacenar el estado del juego
      */
     public void onSaveInstanceState(Bundle outState) {
@@ -73,6 +77,7 @@ public class MainActivity extends Activity {
 
     /**
      * Recupera el estado del juego
+     *
      * @param savedInstanceState Bundle con el estado del juego almacenado
      */
     public void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -100,11 +105,11 @@ public class MainActivity extends Activity {
                 new ResetDialogFragment().show(getFragmentManager(), "RESET GAME DIALOG");
                 return true;
             case R.id.opcGuardarPartida:
-                FileHandler fileHandler = new FileHandler(FileHandler.GAME);
-                fileHandler.writeFile(this, this.juego.serializaTablero(), Context.MODE_PRIVATE);
-                Toast.makeText(this, getString(R.string.stringToUseInToastForSaveGame),
-                        Toast.LENGTH_SHORT).show();
+                this.juego.saveGame(this);
                 return true;
+            case R.id.opcRecuperarPartida:
+                this.juego.loadGame(this);
+                break;
 
             // TODO!!! resto opciones
 
