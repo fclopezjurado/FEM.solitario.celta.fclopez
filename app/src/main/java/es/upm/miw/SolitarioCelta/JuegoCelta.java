@@ -1,11 +1,16 @@
 package es.upm.miw.SolitarioCelta;
 
+import android.content.Context;
+import android.widget.Toast;
+
+import java.io.IOException;
+
 class JuegoCelta {
-	public static final int TAMANIO = 7;
-	public static final int HUECO = 0;
+    public static final int TAMANIO = 7;
+    public static final int HUECO = 0;
     public static final int FICHA = 1;
     private static final int NUM_MOVIMIENTOS = 4;
-	private int[][] tablero;
+    private int[][] tablero;
 
     private static final int[][] TABLERO_INICIAL = {
             {HUECO, HUECO, FICHA, FICHA, FICHA, HUECO, HUECO},
@@ -17,20 +22,20 @@ class JuegoCelta {
             {HUECO, HUECO, FICHA, FICHA, FICHA, HUECO, HUECO}
     };
     private static final int[][] desplazamientos = {
-            { 0,  2},   // Dcha
-            { 0, -2},   // Izda
-            { 2,  0},   // Abajo
-            {-2,  0}    // Arriba
+            {0, 2},   // Dcha
+            {0, -2},   // Izda
+            {2, 0},   // Abajo
+            {-2, 0}    // Arriba
     };
     private int numFichas;
     private int iSeleccionada, jSeleccionada;   // coordenadas origen ficha
-	private int iSaltada, jSaltada;             // coordenadas ficha sobre la que se hace el movimiento
+    private int iSaltada, jSaltada;             // coordenadas ficha sobre la que se hace el movimiento
 
-	private enum Estado {
-		ESTADO_SELECCION_FICHA, ESTADO_SELECCION_DESTINO, ESTADO_TERMINADO
-	}
+    private enum Estado {
+        ESTADO_SELECCION_FICHA, ESTADO_SELECCION_DESTINO, ESTADO_TERMINADO
+    }
 
-	private Estado estadoJuego;
+    private Estado estadoJuego;
 
     /**
      * Constructor
@@ -38,24 +43,25 @@ class JuegoCelta {
      */
     public JuegoCelta() {
         numFichas = 32;
-		tablero = new int[TAMANIO][TAMANIO];
+        tablero = new int[TAMANIO][TAMANIO];
         for (int i = 0; i < TAMANIO; i++)
             for (int j = 0; j < TAMANIO; j++)
                 tablero[i][j] = TABLERO_INICIAL[i][j];
         tablero[TAMANIO / 2][TAMANIO / 2] = HUECO;   // hueco en posición central
 
-		estadoJuego = Estado.ESTADO_SELECCION_FICHA;
-	}
+        estadoJuego = Estado.ESTADO_SELECCION_FICHA;
+    }
 
     /**
      * Devuelve el contenido de una posición del tablero
+     *
      * @param i fila del tablero
      * @param j columna del tablero
      * @return contenido
      */
-	public int obtenerFicha(int i, int j) {
-		return tablero[i][j];
-	}
+    public int obtenerFicha(int i, int j) {
+        return tablero[i][j];
+    }
 
     /**
      * @return Número de fichas en el tablero
@@ -66,6 +72,7 @@ class JuegoCelta {
 
     /**
      * Determina si el movimiento (i1, j1) a (i2, j2) es aceptable
+     *
      * @param i1 fila origen
      * @param j1 columna origen
      * @param i2 fila destino
@@ -90,35 +97,37 @@ class JuegoCelta {
 
     /**
      * Recibe las coordenadas de la posición pulsada y dependiendo del estado, realiza la acción
+     *
      * @param iPulsada coordenada fila
      * @param jPulsada coordenada columna
      */
-	public void jugar(int iPulsada, int jPulsada) {
-		if (estadoJuego == Estado.ESTADO_SELECCION_FICHA) {
-			iSeleccionada = iPulsada;
-			jSeleccionada = jPulsada;
-			estadoJuego = Estado.ESTADO_SELECCION_DESTINO;
-		} else if (estadoJuego == Estado.ESTADO_SELECCION_DESTINO) {
-			if (movimientoAceptable(iSeleccionada, jSeleccionada, iPulsada, jPulsada)) {
-				estadoJuego = Estado.ESTADO_SELECCION_FICHA;
+    public void jugar(int iPulsada, int jPulsada) {
+        if (estadoJuego == Estado.ESTADO_SELECCION_FICHA) {
+            iSeleccionada = iPulsada;
+            jSeleccionada = jPulsada;
+            estadoJuego = Estado.ESTADO_SELECCION_DESTINO;
+        } else if (estadoJuego == Estado.ESTADO_SELECCION_DESTINO) {
+            if (movimientoAceptable(iSeleccionada, jSeleccionada, iPulsada, jPulsada)) {
+                estadoJuego = Estado.ESTADO_SELECCION_FICHA;
 
                 // Actualizar tablero
                 numFichas--;
-				tablero[iSeleccionada][jSeleccionada] = HUECO;
-				tablero[iSaltada][jSaltada]           = HUECO;
-				tablero[iPulsada][jPulsada]           = FICHA;
+                tablero[iSeleccionada][jSeleccionada] = HUECO;
+                tablero[iSaltada][jSaltada] = HUECO;
+                tablero[iPulsada][jPulsada] = FICHA;
 
-				if (juegoTerminado())
-					estadoJuego = Estado.ESTADO_TERMINADO;
-			} else { // El movimiento no es aceptable, la última ficha pasa a ser la seleccionada
-				iSeleccionada = iPulsada;
-				jSeleccionada = jPulsada;
-			}
-		}
-	}
+                if (juegoTerminado())
+                    estadoJuego = Estado.ESTADO_TERMINADO;
+            } else { // El movimiento no es aceptable, la última ficha pasa a ser la seleccionada
+                iSeleccionada = iPulsada;
+                jSeleccionada = jPulsada;
+            }
+        }
+    }
 
     /**
      * Determina si el juego ha terminado (no se puede realizar ningún movimiento)
+     *
      * @return valor lógico
      */
     public boolean juegoTerminado() {
@@ -140,32 +149,34 @@ class JuegoCelta {
         return true;
     }
 
-	/**
-	 * Serializa el tablero, devolviendo una cadena de 7x7 caracteres (dígitos 0 o 1)
-	 * @return tablero serializado
+    /**
+     * Serializa el tablero, devolviendo una cadena de 7x7 caracteres (dígitos 0 o 1)
+     *
+     * @return tablero serializado
      */
-	public String serializaTablero() {
-		String str = "";
-		for (int i = 0; i < TAMANIO; i++)
-			for (int j = 0; j < TAMANIO; j++)
-				str += Integer.toString(tablero[i][j]);
-		return str;
-	}
+    public String serializaTablero() {
+        String str = "";
+        for (int i = 0; i < TAMANIO; i++)
+            for (int j = 0; j < TAMANIO; j++)
+                str += Integer.toString(tablero[i][j]);
+        return str;
+    }
 
-	/**
-	 * recupera el estado del tablero a partir de su representación serializada
-	 * @param str representación del tablero
+    /**
+     * recupera el estado del tablero a partir de su representación serializada
+     *
+     * @param str representación del tablero
      */
-	public void deserializaTablero(String str) {
-		for (int i = 0, cont = 0; i < TAMANIO; i++)
-			for (int j = 0; j < TAMANIO; j++)
-				tablero[i][j] = str.charAt(cont++) - '0';
-	}
+    public void deserializaTablero(String str) {
+        for (int i = 0, cont = 0; i < TAMANIO; i++)
+            for (int j = 0; j < TAMANIO; j++)
+                tablero[i][j] = str.charAt(cont++) - '0';
+    }
 
-	/**
-	 * Recupera el juego a su estado inicial
-	 */
-	public void reiniciar() {
+    /**
+     * Recupera el juego a su estado inicial
+     */
+    public void reiniciar() {
         numFichas = 32;
         for (int i = 0; i < TAMANIO; i++)
             for (int j = 0; j < TAMANIO; j++)
@@ -173,5 +184,45 @@ class JuegoCelta {
         tablero[TAMANIO / 2][TAMANIO / 2] = HUECO;   // hueco en posición central
 
         estadoJuego = Estado.ESTADO_SELECCION_FICHA;
-	}
+    }
+
+    /**
+     * Function to save current game in an application file called "game.txt".
+     *
+     * @param main the active application context (MainActivity).
+     */
+    public void saveGame(MainActivity main) {
+        FileHandler fileHandler = new FileHandler(FileHandler.GAME);
+        fileHandler.writeFile(main, main.juego.serializaTablero(), Context.MODE_PRIVATE);
+        Toast.makeText(main, main.getString(R.string.toastForSaveGame),
+                Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Function to load a game stored in an application file called "game.txt". If this file
+     * exists, a dialog is shown to confirm the load. The load be done after confirmation.
+     *
+     * @param main the active application context (MainActivity).
+     */
+    public void loadGame(MainActivity main) {
+        FileHandler fileHandler = new FileHandler(FileHandler.GAME);
+
+        if (fileHandler.fileExist(main))
+            new LoadGameDialogFragment().show(main.getFragmentManager(), "LOAD GAME DIALOG");
+        else
+            Toast.makeText(main, main.getString(R.string.toastForLoadGameWhenThereAreNotGames),
+                    Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Function to load a game stored in an application file called "game.txt". This file stores
+     * a serialized board.
+     *
+     * @param main the active application context (MainActivity).
+     */
+    public void loadGameInBoard(MainActivity main) {
+        FileHandler fileHandler = new FileHandler(FileHandler.GAME);
+        String fileData = fileHandler.readFile(main);
+        main.juego.deserializaTablero(fileData);
+    }
 }
