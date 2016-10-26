@@ -40,17 +40,16 @@ public class FileHandler {
         }
     }
 
-    public String readFile(Context context) {
+    public String readFile(Context context) throws IOException {
         String fileData = "";
+        String fileLine;
 
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
-                    context.openFileInput(this.getFileName())));
-            String fileLine = bufferedReader.readLine();
-            while (fileLine != null)
-                fileData += fileLine;
-        } catch (IOException e) {
-            e.printStackTrace();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
+                context.openFileInput(this.getFileName())));
+        fileLine = bufferedReader.readLine();
+        while (fileLine != null) {
+            fileData += fileLine;
+            fileLine = bufferedReader.readLine();
         }
 
         return fileData;
