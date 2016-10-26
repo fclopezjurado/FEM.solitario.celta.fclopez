@@ -199,22 +199,30 @@ class JuegoCelta {
     }
 
     /**
-     * Function to load a game stored in an application file called "game.txt". This file stores
-     * a serialized board.
+     * Function to load a game stored in an application file called "game.txt". If this file
+     * exists, a dialog is shown to confirm the load. The load be done after confirmation.
      *
      * @param main the active application context (MainActivity).
      */
     public void loadGame(MainActivity main) {
         FileHandler fileHandler = new FileHandler(FileHandler.GAME);
-        try {
-            String fileData = fileHandler.readFile(main);
-            main.juego.deserializaTablero(fileData);
-            main.mostrarTablero();
-            Toast.makeText(main, main.getString(R.string.toastForLoadGame),
-                    Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
+
+        if (fileHandler.fileExist(main))
+            new LoadGameDialogFragment().show(main.getFragmentManager(), "LOAD GAME DIALOG");
+        else
             Toast.makeText(main, main.getString(R.string.toastForLoadGameWhenThereAreNotGames),
                     Toast.LENGTH_SHORT).show();
-        }
+    }
+
+    /**
+     * Function to load a game stored in an application file called "game.txt". This file stores
+     * a serialized board.
+     *
+     * @param main the active application context (MainActivity).
+     */
+    public void loadGameInBoard(MainActivity main) {
+        FileHandler fileHandler = new FileHandler(FileHandler.GAME);
+        String fileData = fileHandler.readFile(main);
+        main.juego.deserializaTablero(fileData);
     }
 }
