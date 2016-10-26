@@ -34,6 +34,12 @@
     <string name="NoDialogOption">No</string>
 
     <!-- String for Toast shown when an user saves the game -->
-    <string name="stringToUseInToastForSaveGame">Partida guardada</string>
+    <string name="toastForSaveGame">Partida guardada</string>
+
+    <!-- String for Toast shown when an user tries to load a game, but there are not games -->
+    <string name="toastForLoadGameWhenThereAreNotGames">No existen partidas guardadas</string>
+
+    <!-- String for Toast shown when an user tries to load a game -->
+    <string name="toastForLoadGame">Partida recuperada</string>
 
 </resources>
