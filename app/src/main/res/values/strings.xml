@@ -42,4 +42,10 @@
     <!-- String for Toast shown when an user tries to load a game -->
     <string name="toastForLoadGame">Partida recuperada</string>
 
+    <!-- Load Game Dialog -->
+    <string name="loadGameDialogTitle">Recuperar partida</string>
+    <string name="loadGameDialogMessage">¿Desea recuperar la última partida guardada?</string>
+    <string name="YesLoadGameDialogOption">Sí</string>
+    <string name="NoLoadGameDialogOption">No</string>
+
 </resources>
