@@ -48,4 +48,15 @@
     <string name="YesLoadGameDialogOption">Sí</string>
     <string name="NoLoadGameDialogOption">No</string>
 
+    <!-- String used like hint in dialog to save scores -->
+    <string name="saveScoreDialogUserNameHint">Nombre del jugador</string>
+
+    <!-- Save Score Dialog -->
+    <string name="saveScoreDialogTitle">Guardar puntuación</string>
+    <string name="YesSaveScoreDialogOption">Guardar</string>
+    <string name="NoSaveScoreDialogOption">Cancelar</string>
+
+    <!-- String for Toast shown when an user has stored a score -->
+    <string name="toastToSaveScore">Puntuación guardada</string>
+
 </resources>

@@ -37,8 +37,7 @@ public class MainActivity extends Activity {
 
         mostrarTablero();
         if (juego.juegoTerminado()) {
-            // TODO guardar puntuación
-            new AlertDialogFragment().show(getFragmentManager(), "ALERT DIALOG");
+            new SaveScoreDialogFragment().show(getFragmentManager(), "SAVE SCORE DIALOG");
         }
     }
 
