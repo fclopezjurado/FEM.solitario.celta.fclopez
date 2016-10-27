@@ -16,6 +16,8 @@ import java.io.InputStreamReader;
 public class FileHandler {
 
     public static final String GAME = "game.txt";
+    public static final String SCORES = "scores.txt";
+    public static final String END_OF_LINE = "\r\n";
 
     private String fileName;
 
@@ -35,7 +37,7 @@ public class FileHandler {
         try {
             FileOutputStream fileOutputStream = context.openFileOutput(this.getFileName(),
                     openMode);
-            fileOutputStream.write(fileData.getBytes());
+            fileOutputStream.write((fileData + FileHandler.END_OF_LINE).getBytes());
             fileOutputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
