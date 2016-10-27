@@ -56,4 +56,7 @@
     <string name="YesSaveScoreDialogOption">Guardar</string>
     <string name="NoSaveScoreDialogOption">Cancelar</string>
 
+    <!-- String for Toast shown when an user has stored a score -->
+    <string name="toastToSaveScore">Puntuación guardada</string>
+
 </resources>
