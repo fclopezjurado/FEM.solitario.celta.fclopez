@@ -48,4 +48,7 @@
     <string name="YesLoadGameDialogOption">Sí</string>
     <string name="NoLoadGameDialogOption">No</string>
 
+    <!-- String used like hint in dialog to save scores -->
+    <string name="saveScoreDialogUserNameHint">Nombre del jugador</string>
+
 </resources>
