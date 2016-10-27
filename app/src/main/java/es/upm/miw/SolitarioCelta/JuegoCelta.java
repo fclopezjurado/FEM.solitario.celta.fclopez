@@ -3,7 +3,9 @@ package es.upm.miw.SolitarioCelta;
 import android.content.Context;
 import android.widget.Toast;
 
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 class JuegoCelta {
     public static final int TAMANIO = 7;
@@ -187,6 +189,28 @@ class JuegoCelta {
     }
 
     /**
+     * Function to know what is the number of pieces in the board.
+     *
+     * @return int the number of pieces in board.
+     */
+    private int numberOfPieces() {
+        int numberOfPieces = 0;
+
+        for (int i = 0; i < TAMANIO; i++)
+            for (int j = 0; j < TAMANIO; j++)
+                if (this.tablero[i][j] == JuegoCelta.FICHA)
+                    numberOfPieces++;
+
+        return numberOfPieces;
+    }
+
+    private String serializeScore(String playerName) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss", Locale.UK);
+        Date date = new Date();
+        return playerName + ";" + this.numberOfPieces() + ";" + dateFormat.format(date);
+    }
+
+    /**
      * Function to save current game in an application file called "game.txt".
      *
      * @param main the active application context (MainActivity).
@@ -224,5 +248,18 @@ class JuegoCelta {
         FileHandler fileHandler = new FileHandler(FileHandler.GAME);
         String fileData = fileHandler.readFile(main);
         main.juego.deserializaTablero(fileData);
+    }
+
+    /**
+     * Function to save the score of the last game in an application file called "scores.txt".
+     *
+     * @param main       the active application context (MainActivity).
+     * @param playerName the name of player who played the last game.
+     */
+    public void saveScore(MainActivity main, String playerName) {
+        FileHandler fileHandler = new FileHandler(FileHandler.SCORES);
+        fileHandler.writeFile(main, main.juego.serializeScore(playerName), Context.MODE_APPEND);
+        Toast.makeText(main, main.getString(R.string.toastToSaveScore),
+                Toast.LENGTH_SHORT).show();
     }
 }
