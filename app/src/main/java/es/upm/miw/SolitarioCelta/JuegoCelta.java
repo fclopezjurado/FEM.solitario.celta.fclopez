@@ -205,9 +205,7 @@ class JuegoCelta {
     }
 
     private String serializeScore(String playerName) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss", Locale.UK);
-        Date date = new Date();
-        return playerName + ";" + this.numberOfPieces() + ";" + dateFormat.format(date);
+        return playerName + ";" + this.numberOfPieces() + ";" + System.currentTimeMillis();
     }
 
     /**
