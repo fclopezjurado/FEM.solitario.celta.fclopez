@@ -231,6 +231,25 @@ public class JuegoCelta {
     }
 
     /**
+     * Function to recover games from file where are stored. This function is used to recover
+     * all games names to be used in "LoadGameDialogFragment" dialog. All games names are shown
+     * in a list of game names to be loaded.
+     *
+     * @param main the active application context (MainActivity).
+     * @return CharSequence[] with all game names.
+     */
+    public CharSequence[] recoverGamesFromStore(MainActivity main) {
+        FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAMES);
+        ArrayList<Game> games = fileHandler.readFile(main);
+        ArrayList<String> gamesNames = new ArrayList<>();
+
+        for (Game game: games)
+            gamesNames.add(game.getGameName());
+
+        return gamesNames.toArray(new CharSequence[gamesNames.size()]);
+    }
+
+    /**
      * Function to load a game stored in an application file called "game.ser". If this file
      * exists, a dialog is shown to confirm the load. The load be done after confirmation.
      *
@@ -252,11 +271,15 @@ public class JuegoCelta {
      *
      * @param main the active application context (MainActivity).
      */
-    public void loadGameInBoard(MainActivity main) {
+    public void loadGameInBoard(MainActivity main, String gameName) {
         FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAMES);
         ArrayList<Game> fileData = fileHandler.readFile(main);
 
-        main.getJuego().deserializaTablero(fileData.get(0).getBoardState());
+        for (Game game: fileData)
+            if (game.getGameName().equals(gameName)) {
+                main.getJuego().deserializaTablero(game.getBoardState());
+                main.mostrarTablero();
+            }
     }
 
     /**
