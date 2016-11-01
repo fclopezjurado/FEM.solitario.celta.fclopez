@@ -214,11 +214,15 @@ public class JuegoCelta {
      * Function to save current game in an application file called "game.ser".
      *
      * @param main the active application context (MainActivity).
+     * @param gameName the name of game given by user.
      */
-    public void saveGame(MainActivity main) {
+    public void saveGame(MainActivity main, String gameName) {
         ArrayList<Game> games = new ArrayList<>();
-        Game game = new Game(main.getJuego().serializaTablero());
-        FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAME);
+        Game game = new Game(main.getJuego().serializaTablero(), gameName);
+        FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAMES);
+
+        if (fileHandler.fileExist(main))
+            games = fileHandler.readFile(main);
 
         games.add(game);
         fileHandler.writeFile(main, games, Context.MODE_PRIVATE);
@@ -233,7 +237,7 @@ public class JuegoCelta {
      * @param main the active application context (MainActivity).
      */
     public void loadGame(MainActivity main) {
-        FileHandler fileHandler = new FileHandler(FileHandler.GAME);
+        FileHandler fileHandler = new FileHandler(FileHandler.GAMES);
 
         if (fileHandler.fileExist(main))
             new LoadGameDialogFragment().show(main.getFragmentManager(), "LOAD GAME DIALOG");
@@ -249,7 +253,7 @@ public class JuegoCelta {
      * @param main the active application context (MainActivity).
      */
     public void loadGameInBoard(MainActivity main) {
-        FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAME);
+        FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAMES);
         ArrayList<Game> fileData = fileHandler.readFile(main);
 
         main.getJuego().deserializaTablero(fileData.get(0).getBoardState());
