@@ -3,7 +3,6 @@ package es.upm.miw.SolitarioCelta.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -54,7 +53,7 @@ public class BestScoresActivity extends Activity {
                 ).show();
                 return true;
             default:
-                NavUtils.navigateUpFromSameTask(this);
+                this.finish();
                 break;
         }
 
