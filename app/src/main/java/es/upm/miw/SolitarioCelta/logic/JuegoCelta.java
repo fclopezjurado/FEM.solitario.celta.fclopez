@@ -1,12 +1,19 @@
-package es.upm.miw.SolitarioCelta;
+package es.upm.miw.SolitarioCelta.logic;
 
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-class JuegoCelta {
+import es.upm.miw.SolitarioCelta.R;
+import es.upm.miw.SolitarioCelta.activities.BestScoresActivity;
+import es.upm.miw.SolitarioCelta.activities.MainActivity;
+import es.upm.miw.SolitarioCelta.dialogs.LoadGameDialogFragment;
+import es.upm.miw.SolitarioCelta.io.FileHandler;
+
+public class JuegoCelta {
     public static final int TAMANIO = 7;
     public static final int HUECO = 0;
     public static final int FICHA = 1;
@@ -210,7 +217,7 @@ class JuegoCelta {
      */
     public void saveGame(MainActivity main) {
         ArrayList<Game> games = new ArrayList<>();
-        Game game = new Game(main.juego.serializaTablero());
+        Game game = new Game(main.getJuego().serializaTablero());
         FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAME);
 
         games.add(game);
@@ -245,7 +252,7 @@ class JuegoCelta {
         FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAME);
         ArrayList<Game> fileData = fileHandler.readFile(main);
 
-        main.juego.deserializaTablero(fileData.get(0).getBoardState());
+        main.getJuego().deserializaTablero(fileData.get(0).getBoardState());
     }
 
     /**
@@ -277,6 +284,7 @@ class JuegoCelta {
         ArrayList<Score> scores = fileHandler.readFile(main);
         Intent intent = new Intent(main.getApplicationContext(), BestScoresActivity.class);
 
+        Collections.sort(scores, new ScoresComparator());
         intent.putExtra("SCORES", scores);
         main.startActivity(intent);
     }

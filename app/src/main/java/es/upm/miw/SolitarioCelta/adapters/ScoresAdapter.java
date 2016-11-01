@@ -1,4 +1,4 @@
-package es.upm.miw.SolitarioCelta;
+package es.upm.miw.SolitarioCelta.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import es.upm.miw.SolitarioCelta.R;
+import es.upm.miw.SolitarioCelta.logic.Score;
 
 /**
  * Created by franlopez on 30/10/2016.

@@ -1,39 +1,39 @@
-package es.upm.miw.SolitarioCelta;
+package es.upm.miw.SolitarioCelta.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.Toast;
+
+import es.upm.miw.SolitarioCelta.activities.MainActivity;
+import es.upm.miw.SolitarioCelta.R;
 
 /**
- * Created by franlopez on 27/10/2016.
+ * Created by franlopez on 25/10/2016.
  */
 
-public class LoadGameDialogFragment extends DialogFragment {
+public class ResetGameDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         final MainActivity main = (MainActivity) getActivity();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getString(R.string.loadGameDialogTitle))
-                .setMessage(getString(R.string.loadGameDialogMessage))
+        builder.setTitle(getString(R.string.dialogTitle))
+                .setMessage(getString(R.string.dialogMessage))
                 .setPositiveButton(
-                        getString(R.string.YesLoadGameDialogOption),
+                        getString(R.string.YesDialogOption),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                main.juego.loadGameInBoard(main);
+                                main.getJuego().reiniciar();
                                 main.mostrarTablero();
-                                Toast.makeText(main, main.getString(R.string.toastForLoadGame),
-                                        Toast.LENGTH_SHORT).show();
                             }
                         }
                 )
                 .setNegativeButton(
-                        getString(R.string.NoLoadGameDialogOption),
+                        getString(R.string.NoDialogOption),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

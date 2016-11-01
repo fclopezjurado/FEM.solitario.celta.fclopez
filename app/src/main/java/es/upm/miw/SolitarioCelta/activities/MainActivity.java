@@ -1,4 +1,4 @@
-package es.upm.miw.SolitarioCelta;
+package es.upm.miw.SolitarioCelta.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,9 +9,14 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import es.upm.miw.SolitarioCelta.logic.JuegoCelta;
+import es.upm.miw.SolitarioCelta.R;
+import es.upm.miw.SolitarioCelta.dialogs.ResetGameDialogFragment;
+import es.upm.miw.SolitarioCelta.dialogs.SaveScoreDialogFragment;
+
 public class MainActivity extends Activity {
 
-    JuegoCelta juego;
+    private JuegoCelta juego;
     private final String GRID_KEY = "GRID_KEY";
 
     public void onCreate(Bundle savedInstanceState) {
@@ -120,5 +125,14 @@ public class MainActivity extends Activity {
                 ).show();
         }
         return true;
+    }
+
+    /**
+     * Getter for "juego" class attribute
+     *
+     * @return an instance of "JuegoCelta" class stored in "juego" class attribute.
+     */
+    public JuegoCelta getJuego() {
+        return this.juego;
     }
 }

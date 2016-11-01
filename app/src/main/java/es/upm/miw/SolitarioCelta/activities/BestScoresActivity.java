@@ -1,10 +1,14 @@
-package es.upm.miw.SolitarioCelta;
+package es.upm.miw.SolitarioCelta.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import es.upm.miw.SolitarioCelta.R;
+import es.upm.miw.SolitarioCelta.logic.Score;
+import es.upm.miw.SolitarioCelta.adapters.ScoresAdapter;
 
 /**
  * Created by franlopez on 30/10/2016.
