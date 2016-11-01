@@ -62,4 +62,10 @@
     <!-- Best scores activity label -->
     <string name="bestScoresLabel">Mejores puntuaciones</string>
 
+    <!-- Best scores "delete scores" activity menu option -->
+    <string name="deleteScores">Borrar Puntuaciones</string>
+
+    <!-- String for Toast shown when an user has delete all scores -->
+    <string name="toastToDeleteScores">Puntuaciones eliminadas</string>
+
 </resources>
