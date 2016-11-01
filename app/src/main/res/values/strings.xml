@@ -44,7 +44,6 @@
 
     <!-- Load Game Dialog -->
     <string name="loadGameDialogTitle">Recuperar partida</string>
-    <string name="loadGameDialogMessage">¿Desea recuperar la última partida guardada?</string>
     <string name="YesLoadGameDialogOption">Sí</string>
     <string name="NoLoadGameDialogOption">No</string>
 
