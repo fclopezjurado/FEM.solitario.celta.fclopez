@@ -106,6 +106,9 @@ public class MainActivity extends Activity {
             case R.id.opcRecuperarPartida:
                 this.juego.loadGame(this);
                 return true;
+            case R.id.opcMejoresResultados:
+                this.juego.bestScores(this);
+                return true;
 
             // TODO!!! resto opciones
 
