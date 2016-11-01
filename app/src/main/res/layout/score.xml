@@ -7,23 +7,23 @@
 
     <TextView
         android:id="@+id/playerName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:textAlignment="center" />
 
     <TextView
         android:id="@+id/numberOfPieces"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textAlignment="center" />
 
     <TextView
         android:id="@+id/scoreDate"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:textAlignment="center" />
 
 </LinearLayout>
