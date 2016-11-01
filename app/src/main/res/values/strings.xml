@@ -59,4 +59,7 @@
     <!-- String for Toast shown when an user has stored a score -->
     <string name="toastToSaveScore">Puntuación guardada</string>
 
+    <!-- Best scores activity label -->
+    <string name="bestScoresLabel">Mejores puntuaciones</string>
+
 </resources>
