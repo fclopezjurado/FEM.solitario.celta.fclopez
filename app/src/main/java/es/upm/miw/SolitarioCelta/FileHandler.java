@@ -2,22 +2,22 @@ package es.upm.miw.SolitarioCelta;
 
 import android.content.Context;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 /**
  * Created by franlopez on 26/10/2016.
  */
 
-public class FileHandler {
+public class FileHandler<T> {
 
-    public static final String GAME = "game.txt";
-    public static final String SCORES = "scores.txt";
-    public static final String END_OF_LINE = "\r\n";
+    public static final String GAME = "game.ser";
+    public static final String SCORES = "scores.ser";
 
     private String fileName;
 
@@ -33,30 +33,29 @@ public class FileHandler {
         this.fileName = fileName;
     }
 
-    public void writeFile(Context context, String fileData, int openMode) {
+    public void writeFile(Context context, ArrayList<T> object, int openMode) {
         try {
             FileOutputStream fileOutputStream = context.openFileOutput(this.getFileName(),
                     openMode);
-            fileOutputStream.write((fileData + FileHandler.END_OF_LINE).getBytes());
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(object);
             fileOutputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public String readFile(Context context) {
-        String fileData = "";
-        String fileLine;
+    public ArrayList<T> readFile(Context context) {
+        ArrayList<T> fileData = new ArrayList<>();
 
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
-                    context.openFileInput(this.getFileName())));
-            fileLine = bufferedReader.readLine();
-            while (fileLine != null) {
-                fileData += fileLine;
-                fileLine = bufferedReader.readLine();
-            }
-        } catch (IOException e) {
+            FileInputStream fileInputStream = context.openFileInput(this.getFileName());
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            fileData = (ArrayList<T>) objectInputStream.readObject();
+
+            objectInputStream.close();
+            fileInputStream.close();
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
