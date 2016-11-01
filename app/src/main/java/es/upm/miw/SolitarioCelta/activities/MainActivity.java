@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import es.upm.miw.SolitarioCelta.dialogs.SaveGameDialogFragment;
 import es.upm.miw.SolitarioCelta.logic.JuegoCelta;
 import es.upm.miw.SolitarioCelta.R;
 import es.upm.miw.SolitarioCelta.dialogs.ResetGameDialogFragment;
@@ -106,7 +107,7 @@ public class MainActivity extends Activity {
                 new ResetGameDialogFragment().show(getFragmentManager(), "RESET GAME DIALOG");
                 return true;
             case R.id.opcGuardarPartida:
-                this.juego.saveGame(this);
+                new SaveGameDialogFragment().show(getFragmentManager(), "SAVE GAME DIALOG");
                 return true;
             case R.id.opcRecuperarPartida:
                 this.juego.loadGame(this);
