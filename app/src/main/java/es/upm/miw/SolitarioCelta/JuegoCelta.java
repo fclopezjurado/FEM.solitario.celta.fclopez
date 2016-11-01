@@ -1,11 +1,10 @@
 package es.upm.miw.SolitarioCelta;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.ArrayList;
 
 class JuegoCelta {
     public static final int TAMANIO = 7;
@@ -204,24 +203,24 @@ class JuegoCelta {
         return numberOfPieces;
     }
 
-    private String serializeScore(String playerName) {
-        return playerName + ";" + this.numberOfPieces() + ";" + System.currentTimeMillis();
-    }
-
     /**
-     * Function to save current game in an application file called "game.txt".
+     * Function to save current game in an application file called "game.ser".
      *
      * @param main the active application context (MainActivity).
      */
     public void saveGame(MainActivity main) {
-        FileHandler fileHandler = new FileHandler(FileHandler.GAME);
-        fileHandler.writeFile(main, main.juego.serializaTablero(), Context.MODE_PRIVATE);
+        ArrayList<Game> games = new ArrayList<>();
+        Game game = new Game(main.juego.serializaTablero());
+        FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAME);
+
+        games.add(game);
+        fileHandler.writeFile(main, games, Context.MODE_PRIVATE);
         Toast.makeText(main, main.getString(R.string.toastForSaveGame),
                 Toast.LENGTH_SHORT).show();
     }
 
     /**
-     * Function to load a game stored in an application file called "game.txt". If this file
+     * Function to load a game stored in an application file called "game.ser". If this file
      * exists, a dialog is shown to confirm the load. The load be done after confirmation.
      *
      * @param main the active application context (MainActivity).
@@ -237,27 +236,48 @@ class JuegoCelta {
     }
 
     /**
-     * Function to load a game stored in an application file called "game.txt". This file stores
+     * Function to load a game stored in an application file called "game.ser". This file stores
      * a serialized board.
      *
      * @param main the active application context (MainActivity).
      */
     public void loadGameInBoard(MainActivity main) {
-        FileHandler fileHandler = new FileHandler(FileHandler.GAME);
-        String fileData = fileHandler.readFile(main);
-        main.juego.deserializaTablero(fileData);
+        FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAME);
+        ArrayList<Game> fileData = fileHandler.readFile(main);
+
+        main.juego.deserializaTablero(fileData.get(0).getBoardState());
     }
 
     /**
-     * Function to save the score of the last game in an application file called "scores.txt".
+     * Function to save the score of the last game in an application file called "scores.ser".
      *
      * @param main       the active application context (MainActivity).
      * @param playerName the name of player who played the last game.
      */
     public void saveScore(MainActivity main, String playerName) {
-        FileHandler fileHandler = new FileHandler(FileHandler.SCORES);
-        fileHandler.writeFile(main, main.juego.serializeScore(playerName), Context.MODE_APPEND);
-        Toast.makeText(main, main.getString(R.string.toastToSaveScore),
-                Toast.LENGTH_SHORT).show();
+        FileHandler<Score> fileHandler = new FileHandler<>(FileHandler.SCORES);
+        ArrayList<Score> scores = new ArrayList<>();
+        Score score = new Score(playerName, this.numberOfPieces(), System.currentTimeMillis());
+
+        if (fileHandler.fileExist(main))
+            scores = fileHandler.readFile(main);
+
+        scores.add(score);
+        fileHandler.writeFile(main, scores, Context.MODE_PRIVATE);
+        Toast.makeText(main, main.getString(R.string.toastToSaveScore), Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Function to recover all scores stored in an application file called "scores.ser".
+     *
+     * @param main the active application context (MainActivity).
+     */
+    public void bestScores(MainActivity main) {
+        FileHandler<Score> fileHandler = new FileHandler<>(FileHandler.SCORES);
+        ArrayList<Score> scores = fileHandler.readFile(main);
+        Intent intent = new Intent(main.getApplicationContext(), BestScoresActivity.class);
+
+        intent.putExtra("SCORES", scores);
+        main.startActivity(intent);
     }
 }
