@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import es.upm.miw.SolitarioCelta.activities.MainActivity;
 import es.upm.miw.SolitarioCelta.R;
@@ -19,28 +18,14 @@ public class LoadGameDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         final MainActivity main = (MainActivity) getActivity();
+        final CharSequence[] gamesNames = main.getJuego().recoverGamesFromStore(main);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.loadGameDialogTitle))
-                .setMessage(getString(R.string.loadGameDialogMessage))
-                .setPositiveButton(
-                        getString(R.string.YesLoadGameDialogOption),
+                .setItems(gamesNames,
                         new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                main.getJuego().loadGameInBoard(main);
-                                main.mostrarTablero();
-                                Toast.makeText(main, main.getString(R.string.toastForLoadGame),
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                )
-                .setNegativeButton(
-                        getString(R.string.NoLoadGameDialogOption),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
+                            public void onClick(DialogInterface dialog, int which) {
+                                main.getJuego().loadGameInBoard(main, gamesNames[which].toString());
                             }
                         }
                 );

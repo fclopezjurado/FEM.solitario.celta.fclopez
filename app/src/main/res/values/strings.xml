@@ -44,7 +44,6 @@
 
     <!-- Load Game Dialog -->
     <string name="loadGameDialogTitle">Recuperar partida</string>
-    <string name="loadGameDialogMessage">¿Desea recuperar la última partida guardada?</string>
     <string name="YesLoadGameDialogOption">Sí</string>
     <string name="NoLoadGameDialogOption">No</string>
 
@@ -67,5 +66,13 @@
 
     <!-- String for Toast shown when an user has delete all scores -->
     <string name="toastToDeleteScores">Puntuaciones eliminadas</string>
+
+    <!-- String used like hint in dialog to save games -->
+    <string name="saveGameDialogUserNameHint">Nombre de la partida</string>
+
+    <!-- Save Game Dialog -->
+    <string name="saveGameDialogTitle">Guardar partida</string>
+    <string name="YesSaveGameDialogOption">Guardar</string>
+    <string name="NoSaveGameDialogOption">Cancelar</string>
 
 </resources>

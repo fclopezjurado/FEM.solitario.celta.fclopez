@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class FileHandler<T> {
 
-    public static final String GAME = "game.ser";
+    public static final String GAMES = "games.ser";
     public static final String SCORES = "scores.ser";
 
     private String fileName;

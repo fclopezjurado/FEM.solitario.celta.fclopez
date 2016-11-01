@@ -8,9 +8,11 @@ import java.io.Serializable;
 
 public class Game implements Serializable {
     private String boardState;
+    private String gameName;
 
-    public Game(String boardState) {
+    public Game(String boardState, String gameName) {
         this.setBoardState(boardState);
+        this.setGameName(gameName);
     }
 
     public String getBoardState() {
@@ -19,5 +21,13 @@ public class Game implements Serializable {
 
     private void setBoardState(String boardState) {
         this.boardState = boardState;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    private void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 }

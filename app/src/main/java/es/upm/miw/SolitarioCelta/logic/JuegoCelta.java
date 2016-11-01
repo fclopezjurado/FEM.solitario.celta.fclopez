@@ -214,16 +214,39 @@ public class JuegoCelta {
      * Function to save current game in an application file called "game.ser".
      *
      * @param main the active application context (MainActivity).
+     * @param gameName the name of game given by user.
      */
-    public void saveGame(MainActivity main) {
+    public void saveGame(MainActivity main, String gameName) {
         ArrayList<Game> games = new ArrayList<>();
-        Game game = new Game(main.getJuego().serializaTablero());
-        FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAME);
+        Game game = new Game(main.getJuego().serializaTablero(), gameName);
+        FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAMES);
+
+        if (fileHandler.fileExist(main))
+            games = fileHandler.readFile(main);
 
         games.add(game);
         fileHandler.writeFile(main, games, Context.MODE_PRIVATE);
         Toast.makeText(main, main.getString(R.string.toastForSaveGame),
                 Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Function to recover games from file where are stored. This function is used to recover
+     * all games names to be used in "LoadGameDialogFragment" dialog. All games names are shown
+     * in a list of game names to be loaded.
+     *
+     * @param main the active application context (MainActivity).
+     * @return CharSequence[] with all game names.
+     */
+    public CharSequence[] recoverGamesFromStore(MainActivity main) {
+        FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAMES);
+        ArrayList<Game> games = fileHandler.readFile(main);
+        ArrayList<String> gamesNames = new ArrayList<>();
+
+        for (Game game: games)
+            gamesNames.add(game.getGameName());
+
+        return gamesNames.toArray(new CharSequence[gamesNames.size()]);
     }
 
     /**
@@ -233,7 +256,7 @@ public class JuegoCelta {
      * @param main the active application context (MainActivity).
      */
     public void loadGame(MainActivity main) {
-        FileHandler fileHandler = new FileHandler(FileHandler.GAME);
+        FileHandler fileHandler = new FileHandler(FileHandler.GAMES);
 
         if (fileHandler.fileExist(main))
             new LoadGameDialogFragment().show(main.getFragmentManager(), "LOAD GAME DIALOG");
@@ -248,11 +271,17 @@ public class JuegoCelta {
      *
      * @param main the active application context (MainActivity).
      */
-    public void loadGameInBoard(MainActivity main) {
-        FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAME);
+    public void loadGameInBoard(MainActivity main, String gameName) {
+        FileHandler<Game> fileHandler = new FileHandler<>(FileHandler.GAMES);
         ArrayList<Game> fileData = fileHandler.readFile(main);
 
-        main.getJuego().deserializaTablero(fileData.get(0).getBoardState());
+        for (Game game: fileData)
+            if (game.getGameName().equals(gameName)) {
+                main.getJuego().deserializaTablero(game.getBoardState());
+                main.mostrarTablero();
+                Toast.makeText(main, main.getString(R.string.toastForLoadGame),
+                        Toast.LENGTH_SHORT).show();
+            }
     }
 
     /**
