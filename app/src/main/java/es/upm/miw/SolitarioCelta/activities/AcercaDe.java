@@ -1,8 +1,10 @@
-package es.upm.miw.SolitarioCelta;
+package es.upm.miw.SolitarioCelta.activities;
 
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import es.upm.miw.SolitarioCelta.R;
 
 public class AcercaDe extends Activity {
 

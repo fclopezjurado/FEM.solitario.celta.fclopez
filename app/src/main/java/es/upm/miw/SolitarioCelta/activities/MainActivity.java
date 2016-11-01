@@ -1,4 +1,4 @@
-package es.upm.miw.SolitarioCelta;
+package es.upm.miw.SolitarioCelta.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,9 +9,15 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import es.upm.miw.SolitarioCelta.dialogs.SaveGameDialogFragment;
+import es.upm.miw.SolitarioCelta.logic.JuegoCelta;
+import es.upm.miw.SolitarioCelta.R;
+import es.upm.miw.SolitarioCelta.dialogs.ResetGameDialogFragment;
+import es.upm.miw.SolitarioCelta.dialogs.SaveScoreDialogFragment;
+
 public class MainActivity extends Activity {
 
-	JuegoCelta juego;
+    private JuegoCelta juego;
     private final String GRID_KEY = "GRID_KEY";
 
     public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,7 @@ public class MainActivity extends Activity {
      * Se ejecuta al pulsar una ficha
      * Las coordenadas (i, j) se obtienen a partir del nombre, ya que el botón
      * tiene un identificador en formato pXY, donde X es la fila e Y la columna
+     *
      * @param v Vista de la ficha pulsada
      */
     public void fichaPulsada(View v) {
@@ -36,8 +43,7 @@ public class MainActivity extends Activity {
 
         mostrarTablero();
         if (juego.juegoTerminado()) {
-            // TODO guardar puntuación
-            new AlertDialogFragment().show(getFragmentManager(), "ALERT DIALOG");
+            new SaveScoreDialogFragment().show(getFragmentManager(), "SAVE SCORE DIALOG");
         }
     }
 
@@ -63,6 +69,7 @@ public class MainActivity extends Activity {
 
     /**
      * Guarda el estado del tablero (serializado)
+     *
      * @param outState Bundle para almacenar el estado del juego
      */
     public void onSaveInstanceState(Bundle outState) {
@@ -72,6 +79,7 @@ public class MainActivity extends Activity {
 
     /**
      * Recupera el estado del juego
+     *
      * @param savedInstanceState Bundle con el estado del juego almacenado
      */
     public void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -95,6 +103,18 @@ public class MainActivity extends Activity {
             case R.id.opcAcercaDe:
                 startActivity(new Intent(this, AcercaDe.class));
                 return true;
+            case R.id.opcReiniciarPartida:
+                new ResetGameDialogFragment().show(getFragmentManager(), "RESET GAME DIALOG");
+                return true;
+            case R.id.opcGuardarPartida:
+                new SaveGameDialogFragment().show(getFragmentManager(), "SAVE GAME DIALOG");
+                return true;
+            case R.id.opcRecuperarPartida:
+                this.juego.loadGame(this);
+                return true;
+            case R.id.opcMejoresResultados:
+                this.juego.bestScores(this);
+                return true;
 
             // TODO!!! resto opciones
 
@@ -106,5 +126,14 @@ public class MainActivity extends Activity {
                 ).show();
         }
         return true;
+    }
+
+    /**
+     * Getter for "juego" class attribute
+     *
+     * @return an instance of "JuegoCelta" class stored in "juego" class attribute.
+     */
+    public JuegoCelta getJuego() {
+        return this.juego;
     }
 }

@@ -1,10 +1,13 @@
-package es.upm.miw.SolitarioCelta;
+package es.upm.miw.SolitarioCelta.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import es.upm.miw.SolitarioCelta.activities.MainActivity;
+import es.upm.miw.SolitarioCelta.R;
 
 public class AlertDialogFragment extends DialogFragment {
 	@Override
@@ -20,7 +23,7 @@ public class AlertDialogFragment extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                main.juego.reiniciar();
+                                main.getJuego().reiniciar();
                                 main.mostrarTablero();
                             }
                         }
