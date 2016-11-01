@@ -66,4 +66,14 @@ public class FileHandler<T> {
         File file = new File(context.getFilesDir(), this.getFileName());
         return file.exists();
     }
+
+    public void deleteFileInfo (Context context, int openMode) {
+        try {
+            FileOutputStream fileOutputStream = context.openFileOutput(this.getFileName(),
+                    openMode);
+            fileOutputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
