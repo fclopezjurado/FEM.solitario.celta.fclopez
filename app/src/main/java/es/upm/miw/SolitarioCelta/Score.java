@@ -1,10 +1,12 @@
 package es.upm.miw.SolitarioCelta;
 
+import java.io.Serializable;
+
 /**
  * Created by franlopez on 30/10/2016.
  */
 
-public class Score {
+public class Score implements Serializable {
     private String playerName;
     private int numberOfPieces;
     private long currentDate;
