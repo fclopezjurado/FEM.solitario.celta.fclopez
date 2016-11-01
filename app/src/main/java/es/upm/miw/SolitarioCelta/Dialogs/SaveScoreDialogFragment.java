@@ -1,4 +1,4 @@
-package es.upm.miw.SolitarioCelta;
+package es.upm.miw.SolitarioCelta.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import es.upm.miw.SolitarioCelta.activities.MainActivity;
+import es.upm.miw.SolitarioCelta.R;
 
 /**
  * Created by franlopez on 27/10/2016.
@@ -31,7 +34,7 @@ public class SaveScoreDialogFragment extends DialogFragment {
                                         .getText().toString();
 
                                 if (playerName.length() > 0) {
-                                    main.juego.saveScore(main, playerName);
+                                    main.getJuego().saveScore(main, playerName);
                                     new AlertDialogFragment().show(getFragmentManager(),
                                             "ALERT DIALOG");
                                 }
