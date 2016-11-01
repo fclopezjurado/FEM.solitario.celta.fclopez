@@ -279,6 +279,8 @@ public class JuegoCelta {
             if (game.getGameName().equals(gameName)) {
                 main.getJuego().deserializaTablero(game.getBoardState());
                 main.mostrarTablero();
+                Toast.makeText(main, main.getString(R.string.toastForLoadGame),
+                        Toast.LENGTH_SHORT).show();
             }
     }
 
